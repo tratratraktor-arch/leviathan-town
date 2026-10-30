@@ -100,6 +100,7 @@ export const EXTRA_ACCESSORY_OFFSETS = createPoints([
 	[0, 3],
 	[0, 3], // 30
 	[0, 3],
+	[0, 3],
 ]);
 
 export const HEAD_ACCESSORY_OFFSETS = createPoints([
@@ -135,4 +136,5 @@ export const HEAD_ACCESSORY_OFFSETS = createPoints([
 	[0, -4],
 	[0, -4], // 30
 	[0, -3],
+	[0, -4],
 ]);
