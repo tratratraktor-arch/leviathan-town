@@ -669,6 +669,21 @@ describe('compressPony', () => {
 			expect(result.neckAccessory!.type).eql(0);
 		});
 
+		it('mane: { type: 32 } (needs 6 type bits)', () => {
+			const data = compressPonyString({ mane: { type: 32, pattern: 0 } } as any);
+			const result = decompressPonyString(data, true);
+			expect(result.mane!.type).eql(32);
+		});
+
+		it('reads version 4 data with 5 type bits', () => {
+			// mane 31 pattern 1, head accessory 19, written by the version 4 code
+			const result = decompressPonyString('EAP/AAAA/wAAAP8AFMH4oQAMwDAA', true);
+			expect(result.coatFill).equal('ff0000');
+			expect(result.mane!.type).eql(31);
+			expect(result.mane!.pattern).eql(1);
+			expect(result.headAccessory!.type).eql(19);
+		});
+
 		it('mane: { type: 0 }', () => {
 			const data = compressPonyString({ mane: { type: 0, pattern: 0 } } as any);
 			const result = decompressPonyString(data, true);

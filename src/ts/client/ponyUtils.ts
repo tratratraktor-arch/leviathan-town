@@ -1,6 +1,6 @@
 /// <reference path="../../typings/my.d.ts" />
 
-import { range, dropRight, compact, max, zip } from 'lodash';
+import { range, dropRight, dropRightWhile, compact, max, zip } from 'lodash';
 import {
 	Eye, Iris, Muzzle, ExpressionExtra, Sprite, ColorExtraSets, PonyInfoBase, SpriteSetBase, ColorExtra, ColorExtraSet
 } from '../common/interfaces';
@@ -146,7 +146,9 @@ export const backLegSleeves: Sets = sprites.backLegSleeves
 	.map(sets => sets && [undefined, undefined, undefined, undefined, undefined, ...sets]);
 
 export const mergedManes = mergeSpriteSets(sprites.behindManes, sprites.topManes, sprites.frontManes)!;
-export const mergedBackManes = mergeSpriteSets(sprites.backBehindManes, sprites.backFrontManes)!;
+// back manes are padded with empty sets up to the mane count, drop the padding
+export const mergedBackManes = dropRightWhile(
+	mergeSpriteSets(sprites.backBehindManes, sprites.backFrontManes)!, set => !set || !set.length);
 export const mergedFacialHair = mergeSpriteSets(sprites.facialHairBehind, sprites.facialHair)!;
 export const mergedEarAccessories = mergeSpriteSets(sprites.earAccessoriesBehind, sprites.earAccessories)!;
 export const mergedHeadAccessories = mergeSpriteSets(sprites.headAccessoriesBehind, sprites.headAccessories)!;
