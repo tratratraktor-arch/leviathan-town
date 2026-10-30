@@ -19,6 +19,8 @@ import { MenuBar } from './menu-bar/menu-bar';
 import { CharacterList } from './character-list/character-list';
 import { CharacterPreview } from './character-preview/character-preview';
 import { CharacterSelect } from './character-select/character-select';
+import { SkinImport } from './skin-import/skin-import';
+import { SkinPreview } from './skin-preview/skin-preview';
 import { EmoteBox } from './emote-box/emote-box';
 import { SliderBar } from './slider-bar/slider-bar';
 import { SpriteBox } from './sprite-box/sprite-box';
@@ -85,6 +87,8 @@ const declarations = [
 	CharacterList,
 	CharacterPreview,
 	CharacterSelect,
+	SkinImport,
+	SkinPreview,
 	EmoteBox,
 	SliderBar,
 	SpriteBox,

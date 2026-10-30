@@ -1,0 +1,45 @@
+@import '../../../../styles/partials/variables';
+
+.skin-import {
+	max-width: 520px;
+	margin: auto;
+}
+
+.skin-slot {
+	display: flex;
+	align-items: center;
+	padding: 6px 8px;
+	border-radius: 4px;
+	background: rgba(0, 0, 0, 0.2);
+	margin-bottom: 6px;
+}
+
+.skin-slot-preview {
+	width: 64px;
+	height: 64px;
+	flex-shrink: 0;
+	margin-right: 10px;
+	background: rgba(255, 255, 255, 0.05);
+}
+
+.skin-slot-info {
+	flex-grow: 1;
+	min-width: 0;
+	text-align: left;
+}
+
+.skin-slot-file {
+	font-size: 12px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.skin-slot-frames {
+	width: 64px;
+	display: inline-block;
+}
+
+.skin-file-input {
+	display: none;
+}

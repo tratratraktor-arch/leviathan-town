@@ -41,6 +41,7 @@ import { PonyTownGame } from '../client/game';
 import { playEffect } from '../client/handlers';
 import * as sprites from '../generated/sprites';
 import { withAlpha } from './color';
+import { drawSkinPony } from '../client/skins';
 
 const flyY = 15;
 const lightExtentX = 100;
@@ -252,6 +253,17 @@ export function setHeadAnimation(pony: Pony, headAnimation: HeadAnimation | unde
 }
 
 export function drawPonyEntity(batch: PaletteSpriteBatch, pony: Pony, drawOptions: DrawOptions) {
+	if (pony.skin !== undefined) {
+		batch.save();
+		transformBatch(batch, pony);
+		const drawn = drawSkinPony(batch, pony, drawOptions.gameTime);
+		batch.restore();
+
+		if (drawn) {
+			return;
+		}
+	}
+
 	if (pony.discardBatch && pony.batch !== undefined) {
 		batch.releaseBatch(pony.batch);
 		pony.batch = undefined;

@@ -594,6 +594,7 @@ export interface Pony extends Entity {
 	site: SocialSite | undefined;
 	modInfo: ModInfo | undefined;
 	ex: boolean; // extended data indicator, sent in extended options
+	skin?: string;
 
 	// effect animations
 	zzzEffect: AnimationPlayer;
@@ -791,6 +792,7 @@ export interface PonyOptions {
 	// mod/extra info
 	site?: SocialSite;
 	modInfo?: ModInfo;
+	skin?: string;
 }
 
 // id, options, name, info, playerState, badName
@@ -1193,7 +1195,20 @@ export interface PonyObject {
 	ponyInfo?: PonyInfo;
 	hideSupport?: boolean;
 	respawnAtSpawn?: boolean;
+	skin?: string;
 }
+
+// Leviathan Town: pony skin made from sprite strips (one strip per animation)
+export type SkinAnimationName = 'stand' | 'walk' | 'sit' | 'lie' | 'fly' | 'boop';
+
+export interface SkinAnimation {
+	src: string; // data:image/png;base64 strip at native (1x) scale, frames side by side
+	frames: number;
+	ax: number; // anchor (bottom center of the shadow) inside a frame
+	ay: number;
+}
+
+export type SkinAnimations = { [K in SkinAnimationName]?: SkinAnimation };
 
 export interface SpriteSetBase {
 	type?: number;

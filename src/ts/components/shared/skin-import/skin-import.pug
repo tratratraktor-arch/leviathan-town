@@ -1,0 +1,49 @@
+.skin-import.text-center
+	div(*ngIf="step === 'name'")
+		p.lead Как зовут твоего пони?
+		.input-group.mx-auto(style="max-width: 400px;")
+			input.form-control.text-center(
+				type="text" [(ngModel)]="pony.name" [maxlength]="maxNameLength" (keydown.enter)="next()"
+				placeholder="Ник" aria-label="Ник")
+			.input-group-append
+				button.btn.btn-primary((click)="next()" [disabled]="saving") Дальше
+
+	div(*ngIf="step === 'skin'")
+		p.lead Импорт пони
+		p.text-muted.small
+			| Выгрузи анимации своего пони из Pony Town (полоска кадров, «shadow padded») и приложи файлы.
+			| Обязательна только анимация стояния, остальные можно добавить потом.
+		.skin-slot(*ngFor="let slot of slots; trackBy: trackSlot")
+			.skin-slot-preview
+				skin-preview(*ngIf="slot.strip" [anim]="slot.strip" [scale]="1")
+			.skin-slot-info
+				div
+					b {{slot.info.label}}
+					span.text-danger(*ngIf="slot.info.required") &nbsp;*
+				.skin-slot-file.text-muted(*ngIf="!slot.file && !slot.error") не загружено
+				.skin-slot-file.text-muted(*ngIf="slot.file && !slot.error")
+					span(*ngIf="slot.loading") обрабатываю…
+					span(*ngIf="!slot.loading && slot.strip")
+						| {{slot.file.name}} · {{slot.strip.width}}×{{slot.strip.height}}
+				.skin-slot-file.text-danger(*ngIf="slot.error") {{slot.error}}
+			.ml-2.text-nowrap
+				label.small.mb-0.mr-1(title="Сколько кадров в полоске") кадров
+				input.form-control.form-control-sm.skin-slot-frames(
+					type="number" min="1" max="64" [value]="slot.frames" (change)="changeFrames(slot, $event)")
+			.ml-2.text-nowrap
+				label.btn.btn-sm.btn-default.mb-0
+					| Файл
+					input.skin-file-input(type="file" accept="image/png" (change)="selectFile(slot, $event)")
+				button.btn.btn-sm.btn-default.ml-1(*ngIf="slot.file" (click)="clear(slot)" aria-label="Убрать") ×
+		.mt-3
+			button.btn.btn-default.mr-2((click)="setStep('name')" [disabled]="saving") Назад
+			button.btn.btn-primary((click)="save()" [disabled]="!canSave") Сохранить пони
+
+	div(*ngIf="step === 'ready'")
+		skin-preview([anim]="previewStand" [scale]="3")
+		p.lead.mb-2 {{pony.name}}
+		.mb-3
+			button.btn.btn-sm.btn-default.mr-2((click)="setStep('name')" [disabled]="joining") Сменить ник
+			button.btn.btn-sm.btn-default((click)="setStep('skin')" [disabled]="joining") Изменить скин
+
+	.alert.alert-danger.mt-3(*ngIf="error") {{error}}

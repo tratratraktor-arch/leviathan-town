@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 import { HASH } from '../../generated/hash';
 import {
 	AccountData, UpdateAccountData, AccountSettings, GameStatus, SocialSiteInfo, PonyObject, JoinResponse,
-	OAuthProvider, EntitiesEditorInfo, FriendData, PalettePonyInfo, HiddenPlayer
+	OAuthProvider, EntitiesEditorInfo, FriendData, PalettePonyInfo, HiddenPlayer, SkinAnimations
 } from '../../common/interfaces';
 import { createDefaultPony, syncLockedPonyInfo, mockPaletteManager } from '../../common/ponyInfo';
 import { removeById, observableToPromise, delay, computeFriendsCRC } from '../../common/utils';
@@ -404,6 +404,20 @@ export class Model {
 				return newPony;
 			})
 			.finally(() => this.pending = false);
+	}
+	// Leviathan Town: skin made from sprite strips
+	saveSkin(pony: PonyObject, anims: SkinAnimations) {
+		return this.post<{ skin: string; }>('/api/skin/save', { pony: pony.id, anims })
+			.then(({ skin }) => {
+				pony.skin = skin;
+				const saved = this.ponies.find(p => p.id === pony.id);
+
+				if (saved) {
+					saved.skin = skin;
+				}
+
+				return skin;
+			});
 	}
 	removePony(pony: PonyObject) {
 		return this.post('/api/pony/remove', { id: pony.id })

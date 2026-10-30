@@ -44,7 +44,7 @@ export function toAccountData(account: IAccount): AccountData {
 	};
 }
 
-export const toPonyObjectFields = '_id name info desc site tag lastUsed flags';
+export const toPonyObjectFields = '_id name info desc site tag lastUsed flags skin';
 
 export function toPonyObject(character: ICharacter): PonyObject;
 export function toPonyObject(character: ICharacter | undefined): PonyObject | null;
@@ -59,6 +59,7 @@ export function toPonyObject(character: ICharacter | undefined): PonyObject | nu
 		lastUsed: character.lastUsed && character.lastUsed.toISOString(),
 		hideSupport: hasFlag(character.flags, CharacterFlags.HideSupport) ? true : undefined,
 		respawnAtSpawn: hasFlag(character.flags, CharacterFlags.RespawnAtSpawn) ? true : undefined,
+		skin: character.skin || undefined,
 	} : null;
 }
 
