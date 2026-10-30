@@ -26,6 +26,18 @@ if ! docker compose version >/dev/null 2>&1; then
 	apt-get update -y && apt-get install -y docker-compose-plugin
 fi
 
+# the client build (webpack + uglify) needs ~3 GB of memory; add swap on small VPS
+MEM_MB="$(awk '/MemTotal/ {print int($2/1024)}' /proc/meminfo)"
+SWAP_MB="$(awk '/SwapTotal/ {print int($2/1024)}' /proc/meminfo)"
+if [ $((MEM_MB + SWAP_MB)) -lt 4000 ] && [ ! -f /swapfile-leviathan ]; then
+	echo "==> Памяти ${MEM_MB} МБ, добавляю swap 4 ГБ для сборки"
+	fallocate -l 4G /swapfile-leviathan || dd if=/dev/zero of=/swapfile-leviathan bs=1M count=4096
+	chmod 600 /swapfile-leviathan
+	mkswap /swapfile-leviathan
+	swapon /swapfile-leviathan
+	grep -q swapfile-leviathan /etc/fstab || echo "/swapfile-leviathan none swap sw 0 0" >> /etc/fstab
+fi
+
 echo "==> Скачиваю код ($BRANCH)"
 if [ -d "$DIR/.git" ]; then
 	git -C "$DIR" fetch origin "$BRANCH"
