@@ -3,6 +3,7 @@ name: Build game image
 on:
   push:
     branches: [main]
+    paths-ignore: ['lite/**', '.github/workflows/lite.yml']
   workflow_dispatch:
 
 permissions:

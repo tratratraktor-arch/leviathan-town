@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Leviathan Town</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- step 1: nickname -->
+<section id="name-screen" class="screen" hidden>
+	<div class="card">
+		<h1>Leviathan Town</h1>
+		<p class="lead">Как зовут твоего пони?</p>
+		<form id="name-form" class="row">
+			<input id="name-input" type="text" maxlength="20" placeholder="Ник" autocomplete="off" aria-label="Ник" required>
+			<button type="submit" class="primary">Дальше</button>
+		</form>
+		<p id="name-error" class="error" hidden></p>
+	</div>
+</section>
+
+<!-- step 2: skin import -->
+<section id="skin-screen" class="screen" hidden>
+	<div class="card wide">
+		<h1>Импорт пони</h1>
+		<p class="muted">
+			Выгрузи анимации своего пони из Pony Town (полоска кадров, «shadow padded») и приложи файлы.
+			Обязательна только анимация стояния, остальные можно добавить потом.
+		</p>
+		<div id="slots"></div>
+		<p id="skin-error" class="error" hidden></p>
+		<div class="row end">
+			<button id="skin-back" type="button">Назад</button>
+			<button id="skin-save" type="button" class="primary" disabled>Сохранить и играть</button>
+		</div>
+	</div>
+</section>
+
+<!-- step 3: the game -->
+<section id="game-screen" class="screen game" hidden>
+	<header class="hud">
+		<div class="brand">Leviathan Town <small id="online"></small></div>
+		<div class="hud-buttons">
+			<button type="button" data-action="sit" title="C">Сесть</button>
+			<button type="button" data-action="lie" title="X">Лечь</button>
+			<button type="button" data-action="boop" title="E">Буп</button>
+			<button type="button" data-action="fly" title="F" id="fly-button">Лететь</button>
+			<span class="sep"></span>
+			<button type="button" id="zoom-out" aria-label="Отдалить">−</button>
+			<span id="zoom-value">3x</span>
+			<button type="button" id="zoom-in" aria-label="Приблизить">+</button>
+			<span class="sep"></span>
+			<button type="button" id="change-pony">Мой пони</button>
+		</div>
+	</header>
+	<main class="stage">
+		<canvas id="game" aria-label="Игровое поле"></canvas>
+		<div id="status" class="status" hidden></div>
+		<div class="hint">Стрелки / WASD или нажми на поле, чтобы идти · <b>C</b> сесть · <b>X</b> лечь · <b>E</b> буп · <b>F</b> лететь · колесо мыши: зум</div>
+	</main>
+</section>
+
+<script type="module" src="main.js"></script>
+</body>
+</html>

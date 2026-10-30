@@ -1,0 +1,73 @@
+:root {
+	--bg: #0f1a24;
+	--panel: #16283a;
+	--line: #24425c;
+	--accent: #6cdcf9;
+	--text: #e3f4fb;
+	--muted: #8aa6bb;
+	--error: #ff8a8a;
+	color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body { background: var(--bg); color: var(--text); font: 15px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; }
+[hidden] { display: none !important; }
+
+h1 { margin: 0 0 8px; font-size: 1.6rem; color: var(--accent); letter-spacing: .02em; }
+.lead { font-size: 1.1rem; margin: 0 0 16px; }
+.muted { color: var(--muted); font-size: .9rem; }
+.error { color: var(--error); }
+
+button, input {
+	font: inherit;
+	color: var(--text);
+	background: transparent;
+	border: 1px solid var(--line);
+	border-radius: 6px;
+	padding: 6px 12px;
+}
+button { cursor: pointer; }
+button:hover:not(:disabled) { border-color: var(--accent); }
+button:disabled { color: var(--muted); border-style: dashed; cursor: not-allowed; }
+button.primary { background: var(--accent); color: #062130; border-color: var(--accent); font-weight: 600; }
+button.primary:disabled { background: transparent; color: var(--muted); }
+button.active { background: var(--line); }
+input[type=text] { background: var(--bg); min-width: 0; flex: 1; }
+input[type=number] { background: var(--bg); width: 64px; padding: 4px 6px; }
+
+.screen { min-height: 100%; display: flex; align-items: center; justify-content: center; padding: 16px; }
+.card { background: var(--panel); border: 2px solid var(--line); border-radius: 10px; padding: 24px; width: 100%; max-width: 420px; text-align: center; }
+.card.wide { max-width: 640px; }
+.row { display: flex; gap: 8px; align-items: center; }
+.row.end { justify-content: flex-end; margin-top: 16px; }
+
+.slot { display: flex; align-items: center; gap: 10px; padding: 8px; margin-bottom: 6px; border-radius: 6px; background: rgba(0, 0, 0, .25); text-align: left; }
+.slot canvas { width: 64px; height: 64px; flex-shrink: 0; background: rgba(255, 255, 255, .05); image-rendering: pixelated; }
+.slot-info { flex: 1; min-width: 0; }
+.slot-info b .req { color: var(--error); }
+.slot-file { font-size: 12px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.slot-file.error { color: var(--error); }
+.slot label.small { font-size: 12px; color: var(--muted); margin-right: 4px; }
+.slot .file-button { display: inline-block; border: 1px solid var(--line); border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+.slot .file-button:hover { border-color: var(--accent); }
+.slot .file-button input { display: none; }
+@media (max-width: 520px) {
+	.slot { flex-wrap: wrap; }
+	.slot-info { flex-basis: calc(100% - 74px); }
+}
+
+.screen.game { display: flex; flex-direction: column; align-items: stretch; padding: 0; height: 100%; }
+.hud { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; justify-content: space-between; padding: 8px max(16px, env(safe-area-inset-left)); background: var(--panel); border-bottom: 2px solid var(--line); }
+.brand { font-weight: 700; color: var(--accent); }
+.brand small { color: var(--muted); font-weight: 400; margin-left: 6px; }
+.hud-buttons { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.hud-buttons button { padding: 4px 10px; font-size: .85rem; }
+.hud .sep { width: 1px; height: 20px; background: var(--line); }
+#zoom-value { min-width: 2.2em; text-align: center; color: var(--accent); }
+.stage { position: relative; flex: 1; min-height: 0; }
+.stage canvas { display: block; width: 100%; height: 100%; touch-action: none; image-rendering: pixelated; }
+.status { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); background: rgba(15, 26, 36, .9); border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; }
+.hint { position: absolute; left: 16px; bottom: 12px; max-width: calc(100% - 32px); background: rgba(15, 26, 36, .8); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; font-size: .8rem; color: var(--muted); }
+.hint b { color: var(--text); }
+@media (pointer: coarse) { .hint { display: none; } }
