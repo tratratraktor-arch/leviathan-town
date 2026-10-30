@@ -63,6 +63,11 @@ export class PlayBox implements OnInit {
 		}
 	}
 	get server() {
+		// Leviathan Town runs a single server, so pick it without asking
+		if (!this.gameService.server && this.servers && this.servers.length === 1) {
+			this.gameService.server = this.servers[0];
+		}
+
 		return this.gameService.server;
 	}
 	set server(value: ServerInfo | undefined) {

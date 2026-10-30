@@ -18,7 +18,8 @@
 		"strict": true,
 		"strictFunctionTypes": true,
 		"sourceMap": true,
-		"preserveConstEnums": true
+		"preserveConstEnums": true,
+		"skipLibCheck": true
 	},
 	"exclude": [
 		"build",
