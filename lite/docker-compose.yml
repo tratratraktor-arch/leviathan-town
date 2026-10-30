@@ -1,0 +1,14 @@
+services:
+  game:
+    image: ghcr.io/tratratraktor-arch/leviathan-lite:latest
+    build: .
+    restart: unless-stopped
+    ports:
+      - "${GAME_BIND:-8090}:8090"
+    volumes:
+      - ./data:/app/data
+    mem_limit: 256m
+    logging:
+      options:
+        max-size: "5m"
+        max-file: "2"
