@@ -11,7 +11,7 @@ services:
     depends_on:
       - mongo
     ports:
-      - "8090:8090"
+      - "${GAME_BIND:-8090}:8090"
     volumes:
       - ./config.json:/app/config.json:ro
       - ./logs:/app/logs
