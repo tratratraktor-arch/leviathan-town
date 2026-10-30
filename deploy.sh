@@ -59,8 +59,10 @@ elif command -v ufw >/dev/null && ufw status | grep -q "Status: active"; then
 	ufw allow "$PORT"/tcp
 fi
 
-echo "==> Собираю и запускаю (первый раз 5-10 минут)"
-docker compose up -d --build
+echo "==> Скачиваю готовый образ игры и запускаю"
+docker compose pull
+docker compose up -d --no-build
+docker image prune -f >/dev/null
 
 HOST="$(grep -o '"host": *"[^"]*"' config.json | sed 's/.*"\(http[^"]*\)"/\1/')"
 echo

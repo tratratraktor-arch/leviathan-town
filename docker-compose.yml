@@ -6,6 +6,7 @@ services:
       - mongo-data:/data/db
 
   game:
+    image: ghcr.io/tratratraktor-arch/leviathan-town:latest
     build: .
     restart: unless-stopped
     depends_on:

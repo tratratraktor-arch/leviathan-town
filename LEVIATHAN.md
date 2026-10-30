@@ -15,26 +15,25 @@
 
 ## Запуск на VPS (Docker)
 
-Нужны Docker и docker compose.
+Игру собирает GitHub Actions (`.github/workflows/docker.yml`) при каждом пуше в `main`
+и публикует образ `ghcr.io/tratratraktor-arch/leviathan-town:latest`. VPS только скачивает
+готовый образ, поэтому подходит даже маленький сервер (1 ядро, 10 ГБ диска).
+
+Установка и обновление одной командой (от root, Ubuntu/Debian):
 
 ```bash
-git clone https://github.com/tratratraktor-arch/leviathan-town.git
-cd leviathan-town
-cp config-leviathan.json config.json
-# в config.json: впиши IP или домен сервера в "host",
-# а в "secret" и "token" — две разные случайные строки:
-#   openssl rand -hex 32
-docker compose up -d --build
+curl -fsSL https://raw.githubusercontent.com/tratratraktor-arch/leviathan-town/main/deploy.sh | DOMAIN=town.sunguard-leviathan.duckdns.org bash
 ```
 
-Первая сборка идёт 5–10 минут. Игра будет на `http://IP_СЕРВЕРА:8090/`.
+С `DOMAIN` игра слушает только `127.0.0.1:8090`, а наружу её отдаёт Caddy:
 
-Обновление после изменений в репозитории:
-
-```bash
-git pull
-docker compose up -d --build
 ```
+town.sunguard-leviathan.duckdns.org {
+	reverse_proxy 127.0.0.1:8090
+}
+```
+
+Без `DOMAIN` игра будет на `http://IP_СЕРВЕРА:8090/`.
 
 ## Запуск для разработки (без Docker)
 
