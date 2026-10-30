@@ -6,7 +6,7 @@ COPY package.json package-lock.json ./
 RUN npm ci --unsafe-perm --no-audit
 
 COPY . .
-RUN mkdir -p logs && npx gulp build
+RUN mkdir -p logs && cp -n config-leviathan.json config.json && npx gulp build
 
 EXPOSE 8090
 CMD ["node", "pony-town.js", "--login", "--admin", "--game"]
