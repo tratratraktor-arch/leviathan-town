@@ -47,6 +47,10 @@ npx gulp build
 node pony-town.js --login --admin --game
 ```
 
+## Свои аксессуары
+
+Как нарисовать новую шляпу, жилет или другую вещь: [docs/accessories-guide.md](docs/accessories-guide.md).
+
 ## Админка
 
 Админ-панель: `/admin/`. Выдать роль своему аккаунту (id видно в админке или в базе):
