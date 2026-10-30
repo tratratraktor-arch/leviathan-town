@@ -22,11 +22,10 @@ div(*ngIf="!playing")
 					support-button
 				.form-group(*ngIf="canInstall")
 					install-button
+				//- Leviathan Town: nickname and sprite strip import instead of the character editor
 				.form-group
-					character-select([(error)]="error" [editButton]="true" (preview)="previewPony = $event")
-				.form-group
-					character-preview([pony]="previewInfo" [state]="state" [passive]="true" [name]="previewName" [tag]="previewTag")
-				.form-group.text-center
+					skin-import(#skinImport)
+				.form-group.text-center(*ngIf="skinImport.step === 'ready'")
 					play-box([(error)]="error")
 
 				play-notice

@@ -5,6 +5,7 @@ import * as mongoose from 'mongoose';
 import * as http from 'http';
 import * as morgan from 'morgan';
 import * as bodyParser from 'body-parser';
+import { SKIN_MAX_BYTES } from './routes/api-skin';
 import * as expressSession from 'express-session';
 import * as serveFavicon from 'serve-favicon';
 import * as Rollbar from 'rollbar';
@@ -157,6 +158,8 @@ if (args.login || args.admin) {
 	app.use(express.static(pathTo('favicons'), { maxAge, etag }));
 }
 
+// skin strips are bigger than the usual api requests
+app.use('/api/skin/save', bodyParser.json({ limit: SKIN_MAX_BYTES }));
 app.use(bodyParser.json({ type: ['json', 'application/csp-report'], limit }));
 app.use(bodyParser.urlencoded({ extended: true, limit }));
 app.use(require('cookie-parser')());

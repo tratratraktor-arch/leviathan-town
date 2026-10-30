@@ -6,6 +6,7 @@ import { Config } from '../api/game';
 import apiAccount from './api-account';
 import apiPony from './api-pony';
 import apiGame from './api-game';
+import apiSkin from './api-skin';
 
 export default function (server: ServerConfig, settings: Settings, config: Config, removedDocument: RemovedDocument) {
 	const app = Router();
@@ -15,6 +16,7 @@ export default function (server: ServerConfig, settings: Settings, config: Confi
 	app.use(apiAccount(server, settings));
 	app.use(apiPony(server, settings, removedDocument));
 	app.use(apiGame(server, settings, config));
+	app.use(apiSkin(server, settings));
 
 	return app;
 }

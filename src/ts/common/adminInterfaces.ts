@@ -446,6 +446,7 @@ export interface CharacterBase<ID> extends TimestampsBase {
 	lastUsed?: Date;
 	creator?: string;
 	state?: { [key: string]: CharacterState | undefined; };
+	skin?: string;
 }
 
 export interface EventBase<ID> extends TimestampsBase {

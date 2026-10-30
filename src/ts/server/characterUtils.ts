@@ -123,6 +123,10 @@ export function updatePony(pony: ServerEntity, account: IAccount, character: ICh
 		options.tag = `sup${level}`;
 	}
 
+	if (character.skin) {
+		options.skin = character.skin;
+	}
+
 	pony.options = options;
 	pony.extraOptions = createExtraOptions(character);
 	pony.canFly = canFly(ponyInfo);

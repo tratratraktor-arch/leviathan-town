@@ -25,7 +25,8 @@
 		menu-item(route="/" name="Home" [icon]="homeIcon")
 		menu-item(route="/help" name="Help" [icon]="helpIcon")
 		menu-item(route="/about" name="About" [icon]="aboutIcon")
-		menu-item(route="/character" name="Characters" [icon]="charactersIcon" *ngIf="account")
+		//- Leviathan Town: the character editor is hidden for now, ponies are imported on the home page
+		//- menu-item(route="/character" name="Characters" [icon]="charactersIcon" *ngIf="account")
 
 	main
 		router-outlet

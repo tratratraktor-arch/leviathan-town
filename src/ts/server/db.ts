@@ -5,7 +5,7 @@ import {
 } from '../common/adminInterfaces';
 import { logger } from './logger';
 import { isAdmin } from '../common/accountUtils';
-import { FriendData } from '../common/interfaces';
+import { FriendData, SkinAnimations } from '../common/interfaces';
 import { replaceEmojis } from '../client/emoji';
 import { filterForbidden } from './characterUtils';
 import { filterName } from '../common/swears';
@@ -32,6 +32,12 @@ export interface ICharacter extends CharacterBase<Types.ObjectId>, Doc {
 export interface IAccount extends AccountBase<Types.ObjectId>, Doc {
 	auths?: IAuth[];
 	characters?: ICharacter[];
+}
+
+export interface ISkin extends Doc {
+	account: Types.ObjectId;
+	character: Types.ObjectId;
+	anims: SkinAnimations;
 }
 
 export interface ISession extends Doc {
@@ -154,6 +160,7 @@ const characterSchema = new Schema({
 	lastUsed: { type: Date, index: true },
 	creator: String,
 	state: Object,
+	skin: String,
 }, { timestamps: true });
 
 characterSchema.index({ updatedAt: 1 });
@@ -192,6 +199,13 @@ const hideRequestSchema = new Schema({
 	date: Date,
 });
 
+// Leviathan Town: pony skins imported from sprite strips
+const skinSchema = new Schema({
+	account: { type: Schema.Types.ObjectId, index: true, ref: 'Account' },
+	character: { type: Schema.Types.ObjectId, index: true, ref: 'Character' },
+	anims: Object,
+}, { timestamps: true });
+
 const sessionSchema = new Schema({
 	_id: String,
 	session: String,
@@ -204,10 +218,12 @@ export const Event = model<IEvent>('Event', eventSchema);
 export const Origin = model<IOrigin>('Origin', originSchema);
 export const Session = model<ISession>('session', sessionSchema);
 export const Character = model<ICharacter>('Character', characterSchema);
+export const Skin = model<ISkin>('Skin', skinSchema);
 
 accountSchema.post('remove', function (doc: Document) {
 	Promise.all([
 		Character.deleteMany({ account: doc._id }).exec(),
+		Skin.deleteMany({ account: doc._id }).exec(),
 		Event.deleteMany({ account: doc._id }).exec(),
 		Auth.deleteMany({ account: doc._id }).exec(),
 		FriendRequest.deleteMany({ $or: [{ target: doc._id }, { source: doc._id }] }).exec(),
