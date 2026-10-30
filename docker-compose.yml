@@ -4,13 +4,19 @@ services:
     restart: unless-stopped
     volumes:
       - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongo", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
 
   game:
     image: ghcr.io/tratratraktor-arch/leviathan-town:latest
     build: .
     restart: unless-stopped
     depends_on:
-      - mongo
+      mongo:
+        condition: service_healthy
     ports:
       - "${GAME_BIND:-8090}:8090"
     volumes:
