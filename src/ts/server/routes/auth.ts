@@ -289,6 +289,27 @@ export function authRoutes(
 		return { success: true };
 	}));
 
+	// Leviathan Town: guest accounts instead of registration (bot sign-up comes later)
+	app.get('/guest', limit(120, 3600), (req, res) => {
+		const savedId = req.cookies && req.cookies.guest;
+
+		Promise.resolve(savedId && /^[a-f0-9]{24}$/.test(savedId) ? Account.findById(savedId).exec() : null)
+			.then(account => account || new Account({
+				name: `Guest ${Math.floor(1000 + Math.random() * 9000)}`,
+				emails: [],
+				lastVisit: new Date(),
+			}).save())
+			.then(account => logIn(req, account).then(() => account))
+			.then(account => {
+				res.cookie('guest', account._id.toString(), { maxAge: 365 * 24 * 3600 * 1000, httpOnly: true });
+				res.redirect('/');
+			})
+			.catch(e => {
+				logger.error(e);
+				res.redirect('/failed-login');
+			});
+	});
+
 	if (mockLogin) {
 		use(new LocalStrategy((login, _pass, done) => Account.findById(login, done)));
 		app.get('/local', authenticate('local', { successRedirect: '/', failureRedirect: '/failed-login' }));
