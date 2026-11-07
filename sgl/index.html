@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ru">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>SunGuard Leviathan</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<canvas id="world" aria-label="Локация"></canvas>
+
+	<div id="hud" hidden>
+		<button id="open-editor" type="button">✎ Персонаж</button>
+		<div class="place" id="place-name"></div>
+		<div class="hint">WASD или стрелки, Shift бегом. Можно кликнуть, куда идти.</div>
+	</div>
+
+	<section id="editor" class="screen">
+		<div class="panel">
+			<header>
+				<h1>SunGuard Leviathan</h1>
+				<p>Создай своего персонажа</p>
+			</header>
+			<div class="editor-grid">
+				<div class="preview-box">
+					<canvas id="preview" width="28" height="46" aria-label="Персонаж"></canvas>
+					<div class="row">
+						<button id="turn-left" type="button" class="chip" aria-label="Повернуть влево">⟲</button>
+						<button id="walk-toggle" type="button" class="chip">Стоять</button>
+						<button id="turn-right" type="button" class="chip" aria-label="Повернуть вправо">⟳</button>
+					</div>
+				</div>
+				<div class="controls">
+					<label class="field">
+						<span>Имя</span>
+						<input id="name" maxlength="20" autocomplete="off">
+					</label>
+
+					<h2>Фракция</h2>
+					<div id="factions" class="factions"></div>
+					<p id="faction-about" class="about"></p>
+
+					<h2>Кожа</h2>
+					<div id="skin" class="swatches"></div>
+
+					<h2>Волосы</h2>
+					<div id="hair" class="swatches"></div>
+					<div id="hair-style" class="row wrap"></div>
+
+					<h2>Глаза</h2>
+					<div id="eyes" class="swatches"></div>
+
+					<div class="row actions">
+						<button id="random" type="button" class="chip">Случайно</button>
+						<button id="play" type="button" class="primary">В мир →</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script src="js/sprite.js"></script>
+	<script src="js/world.js"></script>
+	<script src="js/game.js"></script>
+	<script src="js/editor.js"></script>
+	<script src="js/main.js"></script>
+</body>
+</html>
